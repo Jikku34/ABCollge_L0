@@ -13,7 +13,8 @@ def home_faculty(request):
         print(dist)
         if dist:
             print("aaa")
-            return render(request, 'faculty_frontpage.html', {"dt": dist})
+            return render(request, 'faculty_frontpage.html', {'dt': dist})
+            # return render(request, 'faculty_frontpage.html', {"dt": dist})
         else:
             dist = StudentInfo.objects.filter(student_id=login_user).values()
             return render(request, 'student_frontpage.html', {"dt": dist})

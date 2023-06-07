@@ -1,15 +1,21 @@
 {% extends 'student_mainpage.html' %}
 {% block profilebody %}
-<div class="div4">
-    uplodes imge
+
+<div
+    style="height: 200px;width: 180px; background-color: rgba(19, 143, 201, 0.158); margin-left: 25px;margin-top: 10px; border-radius: 10px; padding: 5px;">
+    {% for x in dt %}
+    <img src="{{ x.student_image.url }}" class="img-responsive"
+        style="width: 170px;height: 190px; margin-right: 10px;" />
+    {% endfor %}
 </div>
 <div class="div5">
-
     {% for x in dt %}
+
+
     <h1>{{x.student_name}}</h1>
     <h3>Btech({{x.student_dept}})</h3>
     <hr>
-    <p>Regition Number: {{x.student_id}}</p>
+    <p>Registration Number: {{x.student_id}}</p>
     <p> DOB : {{x.student_dob}}</p>
     <p> Email : {{x.student_email}}</p>
     <p> Semester: {{x.student_sem}}</p>
@@ -18,5 +24,7 @@
     <p> Aadhar NO : {{x.student_aadhar}}</p>
     <p> class : {{x.student_div}}</p>
     {% endfor %}
+
 </div>
+
 {% endblock %}

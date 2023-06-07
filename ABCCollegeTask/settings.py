@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'ABCCollegeTask.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
-'NAME': 'abccollegedb',
+'NAME': 'abc_college_db',
 'USER': 'root',
 'PASSWORD': '',
 'HOST': '',

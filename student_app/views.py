@@ -69,7 +69,7 @@ def student_result(request):
             if sem is None or tpexam is None:
                 if sem is None and tpexam is not None:
                     return render(request, 'student_result.html', {"dt": 'semempty'})
-                elif tpexam is None and sem != None:
+                elif tpexam is None and sem is not None:
                     return render(request, 'student_result.html', {"dt": 'examempty'})
                 else:
                     return render(request, 'student_result.html', {"dt": 'start'})

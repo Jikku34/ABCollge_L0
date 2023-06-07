@@ -1,34 +1,38 @@
 {% extends 'faculty_mainpage.html' %}
 {% block teacherprofilebody %}
 <div class="teacherprofile" style="display: flex;">
-            <div style="height: 580px; width: 300px;background-color: rgba(48, 48, 48, 0.062); margin-top: 10px; margin-left: 30px; border-radius: 10px;box-shadow: 10px 15px 20px  rgba(0, 0, 0, 0.103);">
+    <div
+        style="height: 580px; width: 300px;background-color: rgba(48, 48, 48, 0.062); margin-top: 10px; margin-left: 30px; border-radius: 10px;box-shadow: 10px 15px 20px  rgba(0, 0, 0, 0.103);">
 
+    </div>
+
+    <div class="div5" style="margin-left: 100px;">
+        {% for x in dt %}
+        <div style="height: 200px ; width: 800px; display:flex;">
+            <div class="div4">
+                <img src="{{ x.student_image.url }}"
+                style="width: 130px;height: 150px; float: left; margin-right: 10px;" />
             </div>
 
-            <div class="div5" style="margin-left: 100px;" >
-                <div style="height: 200px ; width: 800px; display:flex;">
-                    <div class="div4">
-                        uplodes imge
-                    </div>
-
-                    <br>
-                    <div style="text-align: center; width: 100%;">
-                        <h1>Jikkumon James</h1>
-                        <h2>Btech(Electronics and Communication)</h2>
-
-                    </div>
-
-                </div>
-                <hr>
-                <p>Regition Number : TKMEC053</p>
-                <p>          DOB : 23-04-1997</p>
-                <p>        Email : jikkujames34@gmail.com</p>
-                <p>      Semester: 5</p>
-                <p>Address : Mattakkara</p>
-
+            <br>
+            <div style="text-align: center; width: 100%;">
+                <h1>{{x.faculty_name}}</h1>
+                <h2>{{x.faculty_dept }}</h2>
 
             </div>
 
         </div>
+        <hr>
+        <p>Faculty ID : {{x.faculty_id}}</p>
+        <p>Faculty Position: {{x.faculty_position}}</p>
+        <p>Aadhar : {{x.faculty_aadhar}}</p>
+        <p>Faculty Email: {{x.faculty_email}}</p>
+        <p>Address : {{x.faculty_address}}</p>
+
+
+    </div>
+    {% endfor %}
+
+</div>
 
 {% endblock %}
