@@ -1,0 +1,92 @@
+{% extends 'student_mainpage.html' %}
+
+{% block profilebody %}
+<div style="width: 1100px;height: 80%; display: block;">
+    <h1 style="color: #161616; text-align: center;">St Alphonsa College of Engineering</h1>
+    <hr>
+    <form style="margin-top: 10px; margin-left: 200px;" action="" method="POST">
+        {% csrf_token %}
+
+        <label for="typeexam" style="font-size: 20px;">Type of Exam:</label>
+
+        <select name="typeexam" id="typeexam">
+            <option value="" disabled selected hidden>Exam Type: </option>
+            <option value="UNIVERSITY EXAM">University Exam: </option>
+            <option value="SERIES EXAM">Series Exam</option>
+            <option value="CLASS TEST">Class Test</option>
+            <option value="LAB EXAM">Lab Exam</option>
+        </select>
+
+        <label for="Semester" style="font-size: 20px;">Semester:</label>
+
+        <select name="Semester" id="Semester">
+            <option value="" disabled selected hidden>Semester</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+            <option value="S4">S4</option>
+            <option value="S5">S5</option>
+            <option value="S6">S6</option>
+        </select>
+
+        <input
+            style="border-radius: 5px; background-color: rgba(121, 116, 116, 0.884); border: none ; padding: 5px 5px; "
+            type="submit" value="Submit">
+
+    </form>
+
+    <hr>
+
+
+    <div style="width: 95%; height: 100%; text-align: center; margin-left: 30px;">
+        {% if dt == 'start' %}
+
+        {% elif dt == 'empty' %}
+
+        <h1 class="tittle">No Data</h1>
+        {% elif dt == 'semempty' %}
+        <h1 class="tittle">Please Select Semester</h1>
+        {% elif dt == 'examempty' %}
+        <h1 class="tittle">Please Select Type of Exam</h1>
+        {% else %}
+        {% for x in dt %}
+
+
+        <h1>Exam:{{x.type_exam}} </h1>
+        <h2>Semester:{{x.student_sem}}</h2>
+        <h3>Exam date:{{x.exam_date}} : Result Published:{{x.result_date}}</h3>
+
+        <table style="width:100%; background-color: rgb(222, 233, 233);">
+
+            <tr>
+                <th>Subject1</th>
+                <th>Subject2</th>
+                <th>Subject3</th>
+                <th>Subject4</th>
+                <th>Subject5</th>
+                <th>Subject6</th>
+
+            </tr>
+            <tr>
+                <td>{{x.subject1}}</td>
+                <td>{{x.subject2}}</td>
+                <td>{{x.subject3}}</td>
+                <td>{{x.subject4}}</td>
+                <td>{{x.subject5}}</td>
+                <td>{{x.subject6}}</td>
+
+            </tr>
+
+        </table>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

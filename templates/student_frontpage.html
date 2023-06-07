@@ -1,0 +1,22 @@
+{% extends 'student_mainpage.html' %}
+{% block profilebody %}
+<div class="div4">
+    uplodes imge
+</div>
+<div class="div5">
+
+    {% for x in dt %}
+    <h1>{{x.student_name}}</h1>
+    <h3>Btech({{x.student_dept}})</h3>
+    <hr>
+    <p>Regition Number: {{x.student_id}}</p>
+    <p> DOB : {{x.student_dob}}</p>
+    <p> Email : {{x.student_email}}</p>
+    <p> Semester: {{x.student_sem}}</p>
+    <p> Gender : {{x.student_gender}}</p>
+    <p> Join year : {{x.student_year_join}}</p>
+    <p> Aadhar NO : {{x.student_aadhar}}</p>
+    <p> class : {{x.student_div}}</p>
+    {% endfor %}
+</div>
+{% endblock %}

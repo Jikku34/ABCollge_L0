@@ -1,0 +1,31 @@
+{% extends 'faculty_student_page.html' %}
+{% block faculty_student_body %}
+<div style="display: flex;">
+    <div
+        style="height: 530px;width: 230px; background-color: rgba(127, 255, 212, 0.301); margin-left: 10px;margin-top: 10px; border-radius: 10px;box-shadow: 10px 10px 10px  rgba(0, 0, 0, 0.089);">
+        <div
+            style="height: 200px;width: 180px; background-color: rgba(19, 143, 201, 0.158); margin-left: 25px;margin-top: 10px; border-radius: 10px;">
+        </div>
+        <a href="#assignments" class="stdtnavi">Profile</a>
+        <a href="#attendance" class="stdtnavi">Message</a>
+        <a href="#Class" class="stdtnavi">Status</a>
+        <a href="#test" class="stdtnavi">Result</a>
+
+    </div>
+    {% for x in dt %}
+    <div
+        style="height: 530px;width: 845px;text-align: center; background-color: rgba(92, 11, 61, 0.027); margin-left: 10px;margin-top: 10px; border-radius: 10px;">
+        <h1>{{x.student_name}}</h1>
+        <h3>Btech({{x.student_dept}})</h3>
+        <hr>
+        <p>Register NO: {{x.student_id}}</p>
+        <p>address: {{x.student_address}}</p>
+        <p>Phone No: {{x.student_phone}}</p>
+        <p>Email: {{x.student_email}}</p>
+        <p>semester :{{x.student_sem}}</p>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

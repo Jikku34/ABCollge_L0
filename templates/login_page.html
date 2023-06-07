@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        html {
+            background: #e3e3ff;
+
+        }
+
+        .body-content {
+            display: flex;
+            border-radius: 15px;
+            width: 950px;
+            height: 450px;
+            box-shadow: 0 15px 20px rgb(0, 0, 0, .2);
+            overflow: hidden;
+
+        }
+
+        .container {
+            width: 350px;
+            height: 452px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+
+
+            background: rgba(5, 219, 112, 0.144);
+
+        }
+
+        .logo {
+            margin-top: 0px;
+            padding-top: 0;
+        }
+
+        .logo img {
+            width: 100px;
+            border-radius: 50px;
+        }
+
+        h2 {
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-item {
+            margin: 5px;
+            padding-bottom: 10px;
+            display: flex;
+        }
+
+        .form-item label {
+            display: block;
+            padding: 2px;
+            font-size: 20px;
+            width: 100px;
+        }
+
+        .form-item input {
+            width: 320px;
+            height: 35px;
+            border: 2px solid #e1dede69;
+            border-radius: 10px;
+            background: white;
+            color: black;
+            text-align: center;
+        }
+
+        .remember-box {
+            margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: white;
+        }
+
+
+        .remember-box a {
+            text-decoration: none;
+            color: white;
+            margin-left: 30px;
+
+        }
+
+        .remember-box a:hover {
+            color: grey;
+        }
+
+        .form-btns {
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            padding: 10px 0;
+        }
+
+        .form-btns button {
+            margin: auto;
+            font-size: 20px;
+            padding: 5px 15px;
+            border: 0;
+            border-radius: 15px;
+            color: rgb(75, 61, 61);
+            background: #1aa0426e;
+            width: 280px;
+            cursor: pointer;
+        }
+
+        .form-btns button:hover {
+            background: #1aa042c0;
+            color: antiquewhite;
+        }
+
+        .options {
+            padding-top: 15px;
+            margin: auto;
+        }
+
+        .options a {
+            text-decoration: none;
+            color: white;
+            margin: 0 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+        }
+
+        .options a:hover {
+            color: rgb(102, 100, 100);
+        }
+
+        p {
+            text-align: center;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        .divpwd p {
+            text-align: center;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: red;
+        }
+    </style>
+</head>
+
+<body style="margin-left: 200px; margin-top: 100px;">
+    <div class="body-content">
+        <div class="container" style="width: 600px; background-color: rgba(16, 116, 116, 0.26);">
+            <q>{% block qutoes %}{% endblock %}</q>
+        </div>
+
+        <div class="container">
+            <div class="logo">
+                <h1>{% block loginhead %}{% endblock %}</h1>
+            </div>
+            <h2>User Login</h2>
+            <div class="login-form">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-item">
+                        <!-- <label for="userName">Username:</label> -->
+                        <input type="text" name="userId" id="userId" placeholder="User ID">
+                    </div>
+                    <div class="form-item">
+                        <!-- <label for="passWord">Password:</label> -->
+                        <input type="password" name="passWord" id="passWord" placeholder="Password">
+                    </div>
+                    <div class="remember-box">
+                        <input type="checkbox" name="remember" id="remember">Remember Me
+                        <a href="#">Forget Password?</a>
+
+                    </div>
+                    <div class="form-btns">
+
+                        <button type="submit">Login</button>
+
+
+                    </div>
+                    <div class="options">
+                        {% block user %}{% endblock %}
+
+                    </div>
+                    <div class="divpwd">
+                        {% block pwd %}{% endblock %}
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

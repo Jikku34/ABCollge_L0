@@ -1,0 +1,88 @@
+{% extends 'faculty_student_page.html' %}
+{% block faculty_student_body %}
+<h2 style="color: #161616; text-align: center;">St Alphonsa College of Engineering</h2>
+
+<form style="margin-top: 10px; margin-left: 180px;" action="" method="POST">
+    {% csrf_token %}
+
+    <label for="stdpt" style="font-size: 20px;">Department:</label>
+
+    <select name="stdpt" id="stdpt">
+        <option value="" disabled selected hidden>Department</option>
+        <option value="EC">EC </option>
+        <option value="ME">ME </option>
+        <option value="CS">CS</option>
+
+    </select>
+
+    <label for="gender" style="font-size: 20px;">Gender:</label>
+
+    <select name="gender" id="gender">
+        <option value="" disabled selected hidden>Gender</option>
+        <option value="MG">Male</option>
+        <option value="FG">Female </option>
+
+    </select>
+
+
+    <label for="Semester" style="font-size: 20px;">Semester:</label>
+
+    <select name="Semester" id="Semester">
+        <option value="" disabled selected hidden>Semester</option>
+        <option value="S1">S1</option>
+        <option value="S2">S2</option>
+        <option value="S3">S3</option>
+        <option value="S4">S4</option>
+        <option value="S5">S5</option>
+        <option value="S6">S6</option>
+    </select>
+    <label for="Semester" style="font-size: 20px;">Semester:</label>
+
+    <input style="border-radius: 5px; background-color: rgba(121, 116, 116, 0.884); border: none ; padding: 3px 3px; "
+        type="submit" value="Submit">
+    <a href="{% url 'clear' %}"
+        style="padding: 5px; background-color: #4b48489d; border-radius: 4px; color: aliceblue;">clear</a>
+
+</form>
+<hr>
+{% if dt == 'start' %}
+
+
+
+{% elif dt == 'empty' %}
+<h1 class="tittle">No Data</h1>
+
+{% else %}
+
+<table style="width:100%; background-color: rgb(156, 156, 156);">
+
+    <tr>
+        <th>Student Name</th>
+        <th>Student Id</th>
+
+        <th>Student Dept</th>
+
+        <th>Student Sem</th>
+        <th>Student Gender</th>
+        <th>Student profile</th>
+
+    </tr>
+    {% for x in dt %}
+    <tr>
+        <td>{{x.student_name}}</td>
+        <td>{{x.student_id}}</td>
+        <td>{{x.student_dept}}</td>
+        <td>{{x.student_sem}}</td>
+        <td>{{x.student_gender}}</td>
+        <td> <a href="faculty_student_profile/{{x.student_id}}"><span>Link</span></a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+
+
+
+{% endif %}
+{% endblock %}

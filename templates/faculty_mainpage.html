@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .navbar {
+
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.075);
+            height: 30px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+
+
+        }
+
+        body {
+            border-radius: 10px;
+        }
+
+        .navbar a {
+
+
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.664);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 4px;
+
+
+        }
+
+        .navbar a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(219, 231, 220, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .body {
+
+
+
+            height: 575px;
+
+            background-color: rgba(247, 0, 255, 0.171);
+
+            padding-top: 20px;
+        }
+
+        .stnavi {
+            margin-top: 20px;
+            overflow: hidden;
+            margin-left: 10px;
+
+            width: 150px;
+            height: 540px;
+            padding: 8px;
+            background-color: rgba(43, 41, 167, 0.089);
+            border-radius: 15px;
+            box-shadow: 10px 15px 20px rgb(0, 0, 0, .2);
+
+        }
+
+        .stnavi a {
+            margin-top: 23px;
+            text-align: center;
+            font-size: small;
+            display: block;
+            padding: 10px 25px;
+            background-color: rgba(107, 45, 79, 0.171);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 10px;
+
+        }
+
+        .stnavi a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(98, 201, 107, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .div8 {
+            width: 99.5%;
+            height: 99.5%;
+            border-radius: 10px;
+        }
+
+        .teacherprofile {
+            width: 99.7%;
+            height: 585px;
+
+            border-radius: 4px;
+        }
+
+        .div4 {
+            margin-left: 10px;
+            margin-top: 10px;
+            margin-right: 10px;
+            text-align: center;
+            border-radius: 8px;
+            width: 180px;
+            height: 180px;
+            background-color: rgba(42, 42, 53, 0.192);
+        }
+
+        .div5 {
+            margin-left: 80px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 8px;
+            width: 800px;
+            height: 580px;
+            background-color: rgba(71, 187, 171, 0.103);
+            display: block;
+            box-shadow: 10px 15px 20px rgb(0, 0, 0, .2);
+        }
+
+        .stnavi {
+            margin-top: 20px;
+            overflow: hidden;
+            margin-left: 10px;
+
+            width: 150px;
+            height: 540px;
+            padding: 8px;
+            background-color: rgba(43, 41, 167, 0.089);
+            border-radius: 15px;
+            box-shadow: 10px 15px 20px rgb(0, 0, 0, .2);
+
+        }
+
+        .stnavi a {
+            margin-top: 23px;
+            text-align: center;
+            font-size: small;
+            display: block;
+            padding: 10px 25px;
+            background-color: rgba(107, 45, 79, 0.171);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 10px;
+
+        }
+
+        .stnavi a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(98, 201, 107, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .div8 {
+            width: 99.5%;
+            height: 99.5%;
+            border-radius: 10px;
+        }
+
+        .div10 {
+            background: rgba(39, 2, 37, 0.055);
+
+            width: 1140px;
+            margin-left: 30px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.089);
+            height: 555px;
+            overflow: auto;
+        }
+
+        table {
+            margin-top: 50px;
+            margin-left: 250px;
+
+
+        }
+
+        td {
+            padding: 20px;
+        }
+
+        input {
+            width: 400px;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 8px;
+
+            border: none;
+            outline: none;
+        }
+
+        table select {
+            width: 400px;
+            text-align: center;
+            border-radius: 8px;
+        }
+    </style>
+    <title>Techerprofile</title>
+</head>
+
+<body>
+    <div class="div8">
+        <div class="navbar">
+            <a href="{% url 'home_faculty' %}">Dashboard</a>
+            <a href="#assignments">Result</a>
+            <a href="{% url 'student_search' %}">Student</a>
+            <a href="#Class">Cass Schedule</a>
+            <a href="#test">Add Notification</a>
+            <a href="#result">Resources</a>
+            <a href="#Leave">Feedback & Suggestion</a>
+            <a href="{% url 'faculty_logout' %}">Logout</a>
+            <a href="#settings">Settings</a>
+        </div>
+        {% block teacherprofilebody %}{% endblock %}
+
+    </div>
+
+
+</body>
+
+</html>

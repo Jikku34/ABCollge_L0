@@ -1,0 +1,11 @@
+{% extends 'login_page.html' %}
+{% block title %}Student Login{% endblock %}
+{% block qutoes %} Hi Student {% endblock %}
+{% block loginhead %}Student{% endblock %}
+{% block user %}
+ <a href = "{% url 'faculty_login' %}">Teacher</a>
+{% endblock %}
+
+{% block pwd  %}
+<p style="color: rgba(221, 19, 19, 0.911);">{{dtm}}</p>
+{% endblock %}
