@@ -1,20 +1,19 @@
 from django.shortcuts import render, redirect
 from .models import FacultyInfo
-from student_app.models import StudentInfo
+from student_app.models import StudentInfo, StudentResult
+from .encrypt_util import encrypt, decrypt, settings
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for home
 def home_faculty(request):
-    if 'user' in request.session:
-        login_user = request.session['user']
+    if 'faculty_user' in request.session:
+        login_user = request.session['faculty_user']
         dist = FacultyInfo.objects.filter(faculty_id=login_user).values()
-        print("kkk")
-        print(dist)
+
         if dist:
-            print("aaa")
             return render(request, 'faculty_frontpage.html', {'dt': dist})
-            # return render(request, 'faculty_frontpage.html', {"dt": dist})
+
         else:
             dist = StudentInfo.objects.filter(student_id=login_user).values()
             return render(request, 'student_frontpage.html', {"dt": dist})
@@ -27,25 +26,34 @@ def home_faculty(request):
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for login faculty
-
 def login(request):
+
     if request.method == 'POST':
         faculty_id = request.POST.get('userId')
         faculty_password = request.POST.get('passWord')
 
-        check_user = FacultyInfo.objects.filter(faculty_id=faculty_id, faculty_password=faculty_password,
-                                                faculty_status="ACTIVE")
+        dt = FacultyInfo.objects.filter(faculty_id=faculty_id, faculty_status="ACTIVE").values()
 
-        if check_user:
-            print('ddd')
-            request.session['user'] = faculty_id
-            dist = FacultyInfo.objects.filter(faculty_id=faculty_id).values()
-            print(dist)
-            return render(request, 'faculty_frontpage.html', )
+        if dt:
+            y = FacultyInfo.objects.filter(faculty_id=faculty_id).values()
+            for x in y:
+                prd = x.get("faculty_password")
+
+            if decrypt(prd) == faculty_password:
+
+                request.session['faculty_user'] = faculty_id
+                dist = FacultyInfo.objects.filter(faculty_id=faculty_id).values()
+
+                return render(request, 'faculty_frontpage.html', {'dt': dist})
+
+            else:
+
+                dt = {'dtm': 'Wrong password '}
+                return render(request, 'login_faculty.html', dt)
 
         else:
 
-            dt = {'dtm': 'Wrong password or User ID'}
+            dt = {'dtm': 'Wrong User ID'}
             return render(request, 'login_faculty.html', dt)
     return render(request, 'login_faculty.html')
 
@@ -53,7 +61,7 @@ def login(request):
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for search students in faculty in student page
 def student_search(request):
-    if 'user' in request.session:
+    if 'faculty_user' in request.session:
         Semester = request.POST.get('Semester')
         stdpt = request.POST.get('stdpt')
         gender = request.POST.get('gender')
@@ -66,7 +74,7 @@ def student_search(request):
             while i < len(A):
                 d.append(A[i:i + 2])
                 i = i + 2
-            print(d[0])
+
             if d[0] == "NA":
                 Semester = None
             else:
@@ -82,9 +90,18 @@ def student_search(request):
 
             d = searchfn(Semester, stdpt, gender)
             dist = d['dt']
-            for d in dist:
-                print((d['student_id']))
-            return render(request, 'faculty_student_details.html', {"dt": dist})
+
+            try:
+                i=[]
+                for d in dist:
+                    stidlist = {}
+                    stidlist['id'] = d.get('student_id')
+                    stidlist['enry'] = encrypt(d.get('student_id'))
+                    i.append(stidlist)
+
+            except:
+                f = 0
+            return render(request, 'faculty_student_details.html', {"dt": dist,'list':i})
 
         else:
             d = searchfn(Semester, stdpt, gender)
@@ -93,9 +110,17 @@ def student_search(request):
 
             dist = d['dt']
             if dist:
-                for d in dist:
-                    print(d['student_id'])
-                return render(request, 'faculty_student_details.html', {"dt": dist})
+                try:
+                    i = []
+                    for d in dist:
+                        stidlist = {}
+                        stidlist['id'] = d.get('student_id')
+                        stidlist['enry'] = encrypt(d.get('student_id'))
+                        i.append(stidlist)
+
+                except:
+                    f = 0
+                return render(request, 'faculty_student_details.html', {"dt": dist, 'list': i})
             else:
                 return render(request, 'faculty_student_details.html', {"dt": 'start'})
 
@@ -182,7 +207,6 @@ def searchfn(Semester, stdpt, gender):
 
 
 def clear(request):
-    print("clear success")
     try:
         del request.session['search']
 
@@ -193,12 +217,33 @@ def clear(request):
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def faculty_student_profile(request, id):
-    dts = StudentInfo.objects.filter(student_id=id)
-    # for d in dts:
-    #     print(type(d['student_id']))
-    print("lll")
-    print(dts)
+    st_id=decrypt(id)
+    dts = StudentInfo.objects.filter(student_id=st_id)
     return render(request, 'faculty_student_profile.html', {'dt': dts})
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# function for search result by faculty
+def faculty_result(request):
+    if 'faculty_user' in request.session:
+
+        sem = request.POST.get('Semester')
+        type_exam = request.POST.get('type_exam')
+        department = request.POST.get('department')
+        dist = StudentResult.objects.filter(student_dept=department, type_exam=type_exam, student_sem=sem).values()
+
+        if sem is not None and type_exam is not None:
+            if str(dist) == "<QuerySet []>":
+                return render(request, 'faculty_result.html', {"dt": 'empty'})
+            else:
+                return render(request, 'faculty_result.html', {"dt": dist})
+        else:
+            if sem is None or type_exam is None or department is None:
+                return render(request, 'faculty_result.html', {"dt": 'start'})
+
+    else:
+        return redirect('faculty_login')
+    return render(request, 'login_faculty.html')
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -206,11 +251,8 @@ def faculty_student_profile(request, id):
 
 def logout(request):
     try:
-        del request.session['user']
+        del request.session['faculty_user']
 
     except:
         return redirect('faculty_login')
     return redirect('faculty_login')
-
-
-

@@ -68,14 +68,22 @@
 
     </tr>
     {% for x in dt %}
+    {% for y in list %}
+    {% if  x.student_id == y.id %}
+
     <tr>
         <td>{{x.student_name}}</td>
         <td>{{x.student_id}}</td>
         <td>{{x.student_dept}}</td>
         <td>{{x.student_sem}}</td>
         <td>{{x.student_gender}}</td>
-        <td> <a href="faculty_student_profile/{{x.student_id}}"><span>Link</span></a></td>
+
+        <td> <a href="faculty_student_profile/{{y.enry}}"><span>Link</span></a></td>
+
+
     </tr>
+     {% endif %}
+    {% endfor %}
     {% endfor %}
 
 </table>

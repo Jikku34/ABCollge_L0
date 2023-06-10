@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .navbar {
+
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.075);
+            height: 30px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+
+
+        }
+
+        body {
+            border-radius: 10px;
+        }
+
+        .navbar a {
+
+
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.664);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 4px;
+
+
+        }
+
+        .navbar a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(219, 231, 220, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .body {
+
+
+
+            height: 575px;
+
+            background-color: rgba(247, 0, 255, 0.171);
+
+            padding-top: 20px;
+        }
+
+        .div5 {
+            margin-left: 10px;
+            margin-top: 10px;
+
+            border-radius: 8px;
+            width: 1320px;
+            height: 580px;
+            background-color: rgba(71, 187, 171, 0.103);
+            display: block;
+            box-shadow: 10px 15px 20px rgb(0, 0, 0, .2);
+        }
+
+
+        .div8 {
+            width: 99.5%;
+            height: 99.5%;
+            border-radius: 10px;
+        }
+
+
+        table {
+            margin-top: 50px;
+            border: #0c0b0b;
+
+
+
+        }
+
+        td,
+        th {
+            text-align: center;
+        }
+
+
+        table select {
+            width: 400px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        input {
+            width: 400px;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 8px;
+
+            border: none;
+            outline: none;
+        }
+
+
+        select {
+
+            outline: 0;
+            height: 20px;
+
+            width: 100px;
+            background: #aabeba8a;
+            border-radius: 10px;
+            text-align: center;
+
+            color: #0c0b0b;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+    <title>Faculty Result</title>
+</head>
+
+<body>
+    <div class="div8">
+        <div class="navbar">
+            <a href="{% url 'home_faculty' %}">Dashboard</a>
+            <a href="{% url 'faculty_result' %}">Result</a>
+            <a href="{% url 'student_search' %}">Student</a>
+            <a href="#Class">Cass Schedule</a>
+            <a href="#test">Add Notification</a>
+            <a href="#result">Resources</a>
+            <a href="#Leave">Feedback & Suggestion</a>
+            <a href="{% url 'faculty_logout' %}">Logout</a>
+            <a href="#settings">Settings</a>
+        </div>
+        <div class="div5">
+            <h2 style="color: #161616; text-align: center;">St Alphonsa College of Engineering</h2>
+            <hr>
+            <form style="margin-top: 5px; margin-left: 150px;" action="" method="POST">
+                {% csrf_token %}
+
+                <label for="type_exam" style="font-size: 20px; margin-left: 130px;">Type of Exam:</label>
+
+                <select name="type_exam" id="type_exam" style="width: 150px;">
+                    <option value="" disabled selected hidden>Exam Type: </option>
+                    <option value="UNIVERSITY EXAM">University Exam: </option>
+                    <option value="SERIES EXAM">Series Exam</option>
+                    <option value="CLASS TEST">Class Test</option>
+                    <option value="LAB EXAM">Lab Exam</option>
+                </select>
+                <label for="department" style="font-size: 20px;">Department:</label>
+
+                <select name="department" id="department">
+                    <option value="" disabled selected hidden>Department</option>
+                    <option value="ELECTRONICS AND COMMUNICATION">ELECTRONICS AND COMMUNICATION</option>
+                    <option value="MECHANICAL ENGINEERING">MECHANICAL ENGINEERING</option>
+                    <option value="ELECTRICAL ENGINEERING">ELECTRICAL ENGINEERING</option>
+                    <option value="CIVIL ENGINEERING">CIVIL ENGINEERING</option>
+
+
+                </select>
+
+                <label for="Semester" style="font-size: 20px;">Semester:</label>
+
+                <select name="Semester" id="Semester">
+                    <option value="" disabled selected hidden>Semester</option>
+                    <option value="S1">S1</option>
+                    <option value="S2">S2</option>
+                    <option value="S3">S3</option>
+                    <option value="S4">S4</option>
+                    <option value="S5">S5</option>
+                    <option value="S6">S6</option>
+                </select>
+
+
+                <input
+                    style="border-radius: 5px;font-size: small; background-color: rgba(121, 116, 116, 0.884); border: none ; padding: 5px 5px; width: 80px; "
+                    type="submit" value="Submit">
+
+            </form>
+
+            <hr>
+            <div style="width: 95%; height: 100%; text-align: center; margin-left: 30px;">
+                {% if dt == 'start' %}
+
+                {% elif dt == 'empty' %}
+
+                <h1 class="tittle">No Data</h1>
+                {% elif dt == 'semempty' %}
+
+                {% else %}
+                {% for x in dt %}
+
+
+                <h1>Exam:{{x.type_exam}} </h1>
+                <h2>Semester:{{x.student_sem}}</h2>
+                <h3>Exam date:{{x.exam_date}} : Result Published:{{x.result_date}}</h3>
+
+                <table style="width:100%; background-color: rgb(222, 233, 233);">
+
+                    <tr>
+                        <th>Registration No</th>
+                        <th>Subject1</th>
+                        <th>Subject2</th>
+                        <th>Subject3</th>
+                        <th>Subject4</th>
+                        <th>Subject5</th>
+                        <th>Subject6</th>
+
+                    </tr>
+                    <tr>
+                        <td>{{x.student_id }}</td>
+                        <td>{{x.subject1}}</td>
+                        <td>{{x.subject2}}</td>
+                        <td>{{x.subject3}}</td>
+                        <td>{{x.subject4}}</td>
+                        <td>{{x.subject5}}</td>
+                        <td>{{x.subject6}}</td>
+
+                    </tr>
+
+                </table>
+                {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

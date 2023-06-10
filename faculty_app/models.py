@@ -27,4 +27,19 @@ class FacultyInfo(models.Model):
         return self.faculty_id
 
 
+# Model for the message
+
+class Message_Model(models.Model):
+    sender_id=models.CharField(max_length=50,null=True)
+    receiver_id= models.CharField(max_length=50,null=True)
+    message=models.CharField(max_length=500,null=True)
+    message_date=models.DateTimeField(null=True)
+
+    class Meta:
+        db_table = "message_table"
+
+    def __str__(self):
+        return self.sender_id,self.receiver_id
+
+
 

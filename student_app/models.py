@@ -3,9 +3,7 @@ from django.db import models
 
 # Models for Student Information's
 
-
 class StudentInfo(models.Model):
-
     student_name = models.CharField(max_length=100, null=True)
     student_gender = models.CharField(max_length=100, null=True)
     student_id = models.CharField(max_length=100, null=True)
@@ -21,7 +19,7 @@ class StudentInfo(models.Model):
     student_password = models.CharField(max_length=400, null=True)
     student_status = models.CharField(max_length=100, null=True)
     student_dob = models.DateField(null=True)
-    student_image = models.ImageField(upload_to='images/',null=True)
+    student_image = models.ImageField(upload_to='images/', null=True)
 
     class Meta:
         db_table = "student_info_table"
@@ -35,6 +33,7 @@ class StudentInfo(models.Model):
 class StudentResult(models.Model):
     student_id = models.CharField(max_length=100, null=True)
     student_sem = models.CharField(max_length=100, null=True)
+    student_dept = models.CharField(max_length=100, null=True)
     exam_code = models.CharField(max_length=100, null=True)
     type_exam = models.CharField(max_length=100, null=True)
     exam_date = models.DateField(null=True)

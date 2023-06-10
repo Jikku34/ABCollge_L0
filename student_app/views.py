@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import StudentInfo, StudentResult
 from faculty_app.models import FacultyInfo
+from faculty_app.encrypt_util import encrypt, decrypt, settings
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # home function for check user session
 def home_student(request):
-    if 'user' in request.session:
-        login_user = request.session['user']
+    if 'student_user' in request.session:
+        login_user = request.session['student_user']
         dist = FacultyInfo.objects.filter(faculty_id=login_user).values()
         if dist:
             return render(request, 'faculty_frontpage.html', {"dt": dist})
@@ -27,23 +28,35 @@ def home_student(request):
 # function for login student
 
 def login(request):
+
     if request.method == 'POST':
         student_id = request.POST.get('userId')
         student_password = request.POST.get('passWord')
+        print(student_password)
+        dt = StudentInfo.objects.filter(student_id=student_id, student_status="ACTIVE").values()
 
-        check_user = StudentInfo.objects.filter(student_id=student_id, student_password=student_password,
-                                                student_status="ACTIVE")
+        if dt:
+            y = StudentInfo.objects.filter(student_id=student_id).values()
+            for x in y:
+                pad = x.get("student_password")
+            print(pad)
 
-        if check_user:
-            print('ddd')
-            request.session['user'] = student_id
-            dist = StudentInfo.objects.filter(student_id=student_id).values()
-            print(dist)
-            return render(request, 'student_frontpage.html', {'dt': dist})
+            if decrypt(pad) == student_password:
+
+                request.session['student_user'] = student_id
+
+                dst = StudentInfo.objects.filter(student_id=student_id).values()
+
+                return render(request, 'student_frontpage.html', {'dt': dst})
+
+            else:
+
+                dt = {'dtm': 'Wrong password '}
+                return render(request, 'login_student.html', dt)
 
         else:
 
-            dt = {'dtm': 'Wrong password or User ID'}
+            dt = {'dtm': 'Wrong User ID'}
             return render(request, 'login_student.html', dt)
 
     return render(request, 'login_student.html')
@@ -52,8 +65,8 @@ def login(request):
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for student result
 def student_result(request):
-    if 'user' in request.session:
-        login_user = request.session['user']
+    if 'student_user' in request.session:
+        login_user = request.session['student_user']
         sem = request.POST.get('Semester')
         tpexam = request.POST.get('typeexam')
         print(sem)
@@ -84,7 +97,7 @@ def student_result(request):
 
 def logout(request):
     try:
-        del request.session['user']
+        del request.session['student_user']
 
     except:
         return redirect('student_login')
