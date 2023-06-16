@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import FacultyInfo
+from .models import FacultyInfo, Announcement_Model
 from student_app.models import StudentInfo, StudentResult
 from .encrypt_util import encrypt, decrypt, settings
 
@@ -7,14 +7,13 @@ from .encrypt_util import encrypt, decrypt, settings
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for home
 def home_faculty(request):
-    if 'faculty_user' in request.session:
-        login_user = request.session['faculty_user']
-        dist = FacultyInfo.objects.filter(faculty_id=login_user).values()
-
-        if dist:
+    if 'faculty_user' in request.session or 'student_user' in request.session:
+        if 'faculty_user' in request.session:
+            login_user = request.session['faculty_user']
+            dist = FacultyInfo.objects.filter(faculty_id=login_user).values()
             return render(request, 'faculty_frontpage.html', {'dt': dist})
-
         else:
+            login_user = request.session['student_user']
             dist = StudentInfo.objects.filter(student_id=login_user).values()
             return render(request, 'student_frontpage.html', {"dt": dist})
 
@@ -27,7 +26,6 @@ def home_faculty(request):
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function for login faculty
 def login(request):
-
     if request.method == 'POST':
         faculty_id = request.POST.get('userId')
         faculty_password = request.POST.get('passWord')
@@ -92,16 +90,14 @@ def student_search(request):
             dist = d['dt']
 
             try:
-                i=[]
+                i = []
                 for d in dist:
-                    stidlist = {}
-                    stidlist['id'] = d.get('student_id')
-                    stidlist['enry'] = encrypt(d.get('student_id'))
+                    stidlist = {'id': d.get('student_id'), 'enry': encrypt(d.get('student_id'))}
                     i.append(stidlist)
 
             except:
-                f = 0
-            return render(request, 'faculty_student_details.html', {"dt": dist,'list':i})
+                pass
+            return render(request, 'faculty_student_details.html', {"dt": dist, 'list': i})
 
         else:
             d = searchfn(Semester, stdpt, gender)
@@ -119,7 +115,7 @@ def student_search(request):
                         i.append(stidlist)
 
                 except:
-                    f = 0
+                    pass
                 return render(request, 'faculty_student_details.html', {"dt": dist, 'list': i})
             else:
                 return render(request, 'faculty_student_details.html', {"dt": 'start'})
@@ -217,7 +213,7 @@ def clear(request):
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def faculty_student_profile(request, id):
-    st_id=decrypt(id)
+    st_id = decrypt(id)
     dts = StudentInfo.objects.filter(student_id=st_id)
     return render(request, 'faculty_student_profile.html', {'dt': dts})
 
@@ -244,6 +240,80 @@ def faculty_result(request):
     else:
         return redirect('faculty_login')
     return render(request, 'login_faculty.html')
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# faculty announcement  functions
+
+def faculty_announcement(request):
+
+    if 'faculty_user' in request.session:
+        dist = Announcement_Model.objects.filter(announcement_faculty="Faculty").values()
+        if dist:
+            return render(request, 'faculty_announcement.html', {'dt': dist})
+        else:
+            return render(request, 'faculty_announcement.html', {'dt': 'empty'})
+
+    else:
+        return redirect('faculty_login')
+
+
+def faculty_announcement_add(request):
+    if 'faculty_user' in request.session:
+        if request.method == 'POST':
+            an_head = request.POST.get('an-head')
+            an_des = request.POST.get('an-des')
+            an_dpt = request.POST.get('an-dpt')
+            an_sem_all = request.POST.get('an-sem_all')
+            an_sem1 = request.POST.get('an-sem1')
+            an_sem2 = request.POST.get('an-sem2')
+            an_sem3 = request.POST.get('an-sem3')
+            an_sem4 = request.POST.get('an-sem4')
+            an_sem5 = request.POST.get('an-sem5')
+            an_sem6 = request.POST.get('an-sem6')
+            an_id = request.POST.get('an-id')
+            an_date = request.POST.get('an-date')
+            an_for = request.POST.get('an-for')
+            an_link = request.POST.get('an-link')
+            ann_data = Announcement_Model()
+            ann_data.announcement_id = an_id
+            ann_data.announcement_head = an_head
+            ann_data.announcement_content = an_des
+            ann_data.announcement_dpt = an_dpt
+            ann_data.announcement_date = an_date
+            ann_data.announcement_for = an_for
+            ann_data.announcement_link = an_for
+            ann_data.announcement_link = an_link
+            if an_for == 'all-memb':
+                ann_data.announcement_faculty = "Faculty"
+                ann_data.announcement_student = "Student"
+            elif an_for == "faculty":
+                ann_data.announcement_faculty = "Faculty"
+            elif an_for == 'student':
+                ann_data.announcement_student = "Student"
+            else:
+                ann_data.announcement_faculty = None
+                ann_data.announcement_student = None
+
+            if an_sem_all:
+                ann_data.announcement_S1 = "S1"
+                ann_data.announcement_S2 = "S2"
+                ann_data.announcement_S3 = "S3"
+                ann_data.announcement_S4 = "S4"
+                ann_data.announcement_S5 = "S5"
+                ann_data.announcement_S6 = "S6"
+            else:
+                ann_data.announcement_S1 = an_sem1
+                ann_data.announcement_S2 = an_sem2
+                ann_data.announcement_S3 = an_sem3
+                ann_data.announcement_S4 = an_sem4
+                ann_data.announcement_S5 = an_sem5
+                ann_data.announcement_S6 = an_sem6
+            ann_data.save()
+        return render(request, 'faculty_announcement_add.html', )
+
+    else:
+        return redirect('faculty_login')
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

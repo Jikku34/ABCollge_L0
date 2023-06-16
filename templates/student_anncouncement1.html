@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        text-decoration: none;
+        list-style: none;
+      }
+
+      .div1 {
+        overflow: hidden;
+        margin-left: 10px;
+        width: 200px;
+        height: 645px;
+        padding: 8px;
+        background-color: rgba(167, 41, 110, 0.137);
+        border-radius: 15px;
+        box-shadow: 10px 15px 20px rgb(0, 0, 0, 0.2);
+      }
+
+      .div2 {
+        margin-left: 20px;
+        width: 1200px;
+        height: 645px;
+        background-color: rgba(48, 97, 189, 0.199);
+        box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.123);
+        border-radius: 15px;
+      }
+
+      .div1 a {
+        margin-top: 20px;
+        text-align: center;
+        display: block;
+        padding: 10px 25px;
+        background-color: rgba(107, 45, 79, 0.171);
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(19, 1, 1);
+        border-radius: 10px;
+      }
+
+      .div1 a:hover {
+        transform: scale(1.07, 1.07);
+        transition: 0.2s transform;
+        background-color: rgba(133, 39, 90, 0.295);
+        box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.082);
+      }
+
+      .std-anc td:hover {
+        transform: scale(1.02, 1.02);
+        transition: 0.2s transform;
+        border-radius: 15px;
+        background-color: rgba(0, 255, 255, 0.158);
+
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+      }
+
+      .std-anc td {
+        width: 950px;
+        height: 145px;
+        border-radius: 10px;
+        background-color: rgba(0, 255, 255, 0.123);
+        padding-left: 20px;
+        padding-top: 5px;
+      }
+
+      .div-noti-tr {
+        margin-top: 40px;
+      }
+
+      .std-anc {
+        margin-left: 80px;
+        margin-top: 40px;
+      }
+
+      .std-anc table {
+        border: none;
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body style="display: flex">
+    <div class="div1">
+      <a href="{% url 'student_home' %}">Profile</a>
+      <a href="#library">Library & Books</a>
+      <a href="{% url 'student_announcement' %}">Announcement</a>
+      <a href="#attendance">Attendance</a>
+      <a href="#calendar">Calendar</a>
+      <a href="#Class">Class</a>
+      <a href="#test">Test</a>
+      <a href="{% url 'student_result' %}">Result</a>
+      <a href="#Leave">Leave</a>
+      <a href="#faculty">Faculty</a>
+      <a href="{% url 'student_logout' %}">Logout</a>
+      <a href="#settings">Settings</a>
+    </div>
+    <div class="div2" style="display: block">
+      <h1 style="text-align: center">Announcement</h1>
+      <hr />
+      <div class="std-anc">
+        {% if dt == 'start' %}
+
+        {% elif dt == 'empty' %}
+
+        {% else %}
+        <table>
+            {% for x in dt %}
+          {% if st_sem == x.announcement_S1 or st_sem ==  x.announcement_S2 or st_sem == x.announcement_S3 or st_sem == x.announcement_S4 or st_sem == x.announcement_S5 or st_sem == x.announcement_S6%}
+          <tr>
+            <td>
+              <div class="div-noti-td">
+                <h3 style="color: rgb(158, 6, 31)">
+                  {{ x.announcement_head}} (Notification Date: {{
+                  x.announcement_date}})
+                </h3>
+
+                <p>{{ x.announcement_content}}</p>
+                <a
+                  href="{{ x.announcement_link}}"
+                  style="
+                    padding: 5px;
+                    background-color: #304a8379;
+                    color: #dde0dd;
+                    font-size: small;
+                    border-radius: 4px;
+                  "
+                >
+                  Read More</a
+                >
+              </div>
+            </td>
+          </tr>
+          {% endif %}
+
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

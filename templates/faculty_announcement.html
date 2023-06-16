@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .navbar {
+
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.075);
+            height: 30px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+
+
+        }
+
+        body {
+            border-radius: 10px;
+        }
+
+        .navbar a {
+
+
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.664);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 4px;
+
+
+        }
+
+        .navbar a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(219, 231, 220, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .body {
+
+
+
+            height: 575px;
+
+            background-color: rgba(247, 0, 255, 0.171);
+
+            padding-top: 20px;
+        }
+
+        .div8 {
+            width: 99.5%;
+            height: 99.5%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .div-noti {
+            width: 1338px;
+
+            height: 570px;
+            margin-left: 5px;
+            margin-top: 15px;
+            background-color: rgba(88, 38, 38, 0.123);
+            border-radius: 10px;
+            display: inline-block;
+
+        }
+
+        table {
+            margin-top: 30px;
+        }
+
+        .div-noti-td:hover {
+            transform: scale(1.02, 1.02);
+            transition: .2s transform;
+            background-color: rgba(0, 255, 255, 0.158);
+
+
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .div-noti-td {
+            width: 1250px;
+
+            margin-left: 30px;
+            height: 145px;
+            border-radius: 10px;
+            background-color: rgba(0, 255, 255, 0.123);
+
+            padding-left: 20px;
+            padding-top: 5px;
+
+        }
+        .div-noti-tr{
+            margin-top: 40px;
+        }
+
+    </style>
+    <title>Faculty Result</title>
+</head>
+
+<body>
+    <div class="div8">
+        <div class="navbar">
+            <a href="{% url 'home_faculty' %}">Dashboard</a>
+            <a href="{% url 'faculty_result' %}">Result</a>
+            <a href="{% url 'student_search' %}">Student</a>
+            <a href="#Class">Cass Schedule</a>
+            <a href="{% url 'faculty_announcement' %}">Announcement</a>
+            <a href="#result">Resources</a>
+            <a href="#Leave">Feedback & Suggestion</a>
+            <a href="{% url 'faculty_logout' %}">Logout</a>
+            <a href="#settings">Settings</a>
+        </div>
+        <div class="div-noti">
+            <div>
+                <div style="align-items: center; display: flex;">
+                    <h1 style="margin-top: 20px; margin-left: 565px;"> Notification</h1>
+                    <a href="{% url 'faculty_announcement_add' %}"
+                        style="padding: 10px ; background-color: #304a8379;color: #dde0dd; border-radius: 4px;margin-left: 385px; ">
+                        ADD NEW NOTIFICATION</a>
+
+                </div>
+                <hr>
+                <div>
+                    {% if dt == 'start' %}
+
+                    {% elif dt == 'empty' %}
+
+                    {% else %}
+
+                    <table>
+                        {% for x in dt %}
+                        <tr>
+                            <td>
+                                <div class="div-noti-td">
+                                    <h3 style="color: rgb(158, 6, 31);">{{ x.announcement_head}} (Notification Date: {{ x.announcement_date}})</h3>
+
+                                    <p> {{ x.announcement_content}}</p>
+                                    <a href="{{ x.announcement_link}}"
+                                        style="padding: 5px ; background-color: #304a8379;color: #dde0dd;font-size: small; border-radius: 4px; ">
+                                        Read More</a>
+
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        {% endfor %}
+
+                    </table>
+                    {% endif %}
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

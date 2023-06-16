@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .navbar {
+
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.075);
+            height: 30px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+
+
+        }
+
+        body {
+            border-radius: 10px;
+        }
+
+        .navbar a {
+
+
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.664);
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(19, 1, 1);
+            border-radius: 4px;
+
+
+        }
+
+        .navbar a:hover {
+            transform: scale(1.07, 1.07);
+            transition: .2s transform;
+            background-color: rgba(219, 231, 220, 0.781);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .body {
+
+
+
+            height: 575px;
+
+            background-color: rgba(247, 0, 255, 0.171);
+
+            padding-top: 20px;
+        }
+
+        .div8 {
+            width: 99.5%;
+            height: 99.5%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .div-noti {
+            width: 1338px;
+
+            height: 570px;
+            margin-left: 5px;
+            margin-top: 15px;
+            background-color: rgba(88, 38, 38, 0.123);
+            border-radius: 10px;
+            display: inline-block;
+
+        }
+
+
+
+        .div-noti-td:hover {
+            transform: scale(1.02, 1.02);
+            transition: .2s transform;
+            background-color: rgba(0, 255, 255, 0.158);
+
+
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .div-noti-td {
+            width: 1250px;
+            margin-left: 30px;
+            height: 125px;
+            border-radius: 10px;
+            background-color: rgba(0, 255, 255, 0.123);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.052);
+            padding-left: 20px;
+            padding-top: 5px;
+
+        }
+
+        table {
+            margin-top: 40px;
+            margin-left: 20px;
+
+
+        }
+
+        tr,
+        td {
+            margin-top: 100px;
+            padding: 10px;
+        }
+
+        input {
+
+            font-size: 15px;
+
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        table select {
+            width: 250px;
+            height: 20px;
+
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        #text-input {
+
+            border: 1px solid #dddddd;
+            padding: 20px;
+            height: 100px;
+            width: 300px;
+            background-color: #ffffff;
+            color: #000;
+        }
+    </style>
+    <title>Faculty Announcement</title>
+</head>
+
+<body>
+    <div class="div8">
+        <div class="navbar">
+            <a href="{% url 'home_faculty' %}">Dashboard</a>
+            <a href="{% url 'faculty_result' %}">Result</a>
+            <a href="{% url 'student_search' %}">Student</a>
+            <a href="#Class">Cass Schedule</a>
+            <a href="{% url 'faculty_announcement' %}">Announcement</a>
+            <a href="#result">Resources</a>
+            <a href="#Leave">Feedback & Suggestion</a>
+            <a href="{% url 'faculty_logout' %}">Logout</a>
+            <a href="#settings">Settings</a>
+        </div>
+
+    </div>
+    <div class="div-noti">
+        <div style="align-items: center; display: block; ">
+            <p style="margin-top: 20px; text-align: center;font-size: 20px; color: #a0111183;"> Notification</p>
+        </div>
+        <hr>
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <table style="display: flex; margin-left: 150px;">
+                <tr>
+                    <td>Announcement Heading:</td>
+                    <td><input type="text" name="an-head" style="height: 40px; width: 250px;"
+                            placeholder="   Announcement Heading" required></td>
+                    <td></td>
+                    <td>Announcement Discription:</td>
+
+                    <td>
+                        <input type="text" name="an-des" placeholder="  Announcement Discription"
+                            style="height: 40px; width: 250px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>Department:</td>
+                    <td>
+                        <select name="an-dpt" required>
+                            <option value="" disabled selected hidden>__Department__</option>
+                            <option value="all">All</option>
+                            <option value="ELECTRONICS AND COMMUNICATION">ELECTRONICS AND COMMUNICATION</option>
+                            <option value="MECHANICAL">MECHANICAL</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>Student Sem:</td>
+                    <td>
+                        <input type="checkbox" id="sem-all" name="an-sem_all" value="all">
+                        <label for="sem-all"> All</label>
+                        <input type="checkbox" id="sem-1" name="an-sem1" value="S1">
+                        <label for="sem-1"> S1</label>
+                        <input type="checkbox" id="sem-2" name="an-sem2" value="S2">
+                        <label for="sem-2"> S2</label>
+                        <input type="checkbox" id="sem-3" name="an-sem3" value="S3">
+                        <label for="sem-3"> S3</label>
+                        <input type="checkbox" id="sem-4" name="an-sem4" value="S4">
+                        <label for="sem-4"> S4</label>
+                        <input type="checkbox" id="sem-5" name="an-sem5" value="S5">
+                        <label for="sem-5"> S5</label>
+                        <input type="checkbox" id="sem-6" name="an-sem6" value="S6">
+                        <label for="sem-6"> S6</label>
+
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Announcement ID:</td>
+
+                    <td><input type="text" name="an-id" placeholder="Announcement ID"
+                            style="height: 40px; width: 250px;"></td>
+                    <td></td>
+                    <td> Announcement Date :</td>
+                    <td><input type="date" name="an-date"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Announcement For:
+                    </td>
+
+                    <td>
+                        <input type="radio" id="an-all-memb" name="an-for" value="all-memb">
+                        <label for="an-all-memb">All Members</label>
+                        <input type="radio" id="an-all-faculty" name="an-for" value="faculty">
+                        <label for="an-all-faculty">Faculty</label>
+                        <input type="radio" id="an-all-student" name="an-for" value="student">
+                        <label for="an-all-student">Student</label>
+                    </td>
+                    <td></td>
+
+                    <td>Announcement Link:</td>
+
+                    <td><input type="text" name="an-link" placeholder="Announcement link"
+                            style="height: 25px; width: 250px;"></td>
+
+
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <input
+                            style="border-radius: 5px;font-size: small; background-color: rgba(121, 116, 116, 0.884); border: none ; padding: 5px 5px; width: 80px; "
+                            type="submit" value="Submit">
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
